@@ -5,6 +5,8 @@ export default class DeviceStore {
     this._types = [
       { id: 1, name: 'Freezers' },
       { id: 2, name: 'Phones' },
+      { id: 3, name: 'Laptops' },
+      { id: 4, name: 'TV' },
     ];
     this._brands = [
       { id: 1, name: 'Samsung' },
@@ -39,7 +41,30 @@ export default class DeviceStore {
         rating: 5,
         img: 'https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-13-pro-max-graphite-select?wid=470&hei=556&fmt=jpeg&qlt=95&.v=1631652956000',
       },
+      {
+        id: 5,
+        name: 'Iphone 12 pro',
+        price: 25000,
+        rating: 5,
+        img: 'https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-13-pro-max-graphite-select?wid=470&hei=556&fmt=jpeg&qlt=95&.v=1631652956000',
+      },
+      {
+        id: 6,
+        name: 'Iphone 12 pro',
+        price: 25000,
+        rating: 5,
+        img: 'https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-13-pro-max-graphite-select?wid=470&hei=556&fmt=jpeg&qlt=95&.v=1631652956000',
+      },
+      {
+        id: 7,
+        name: 'Iphone 12 pro',
+        price: 25000,
+        rating: 5,
+        img: 'https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-13-pro-max-graphite-select?wid=470&hei=556&fmt=jpeg&qlt=95&.v=1631652956000',
+      },
     ];
+    this._selectedType = {};
+    this._selectedBrand = {};
     makeAutoObservable(this);
   }
 
@@ -52,6 +77,12 @@ export default class DeviceStore {
   setDevices(devices) {
     this._devices = devices;
   }
+  setSelectedType(type) {
+    this._selectedType = type;
+  }
+  setSelectedBrand(brand) {
+    this._selectedBrand = brand;
+  }
 
   get types() {
     return this._types;
@@ -61,5 +92,11 @@ export default class DeviceStore {
   }
   get devices() {
     return this._devices;
+  }
+  get selectedType() {
+    return this._selectedType;
+  }
+  get selectedBrand() {
+    return this._selectedBrand;
   }
 }
