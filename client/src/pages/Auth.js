@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Container, Form, Card, Button, Row } from 'react-bootstrap';
+import { Container, Form, Card, Button, Col } from 'react-bootstrap';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { LOGIN_ROUTE, REGISTRATION_ROUTE, SHOP_ROUTE } from '../utils/consts';
 import { login, registration } from '../http/userAPI';
@@ -24,7 +24,7 @@ const Auth = observer(() => {
       }
       user.setUser(user);
       user.setIsAuth(true);
-      history.push(SHOP_ROUTE);
+      history(SHOP_ROUTE);
     } catch (e) {
       alert(e.response.data.message);
     }
@@ -48,7 +48,7 @@ const Auth = observer(() => {
             onChange={e => setPassword(e.target.value)}
             type="password"
           />
-          <Row className="d-flex justify-content-between mt-3 pl-3 pr-3">
+          <Col className="d-flex justify-content-between mt-3 pl-3 pr-3">
             {isLogin ? (
               <div>
                 Not registered yet? <NavLink to={REGISTRATION_ROUTE}>Registration</NavLink>
@@ -61,7 +61,7 @@ const Auth = observer(() => {
             <Button variant={'outline-success'} onClick={click}>
               {isLogin ? 'Login' : 'Registration'}
             </Button>
-          </Row>
+          </Col>
         </Form>
       </Card>
     </Container>
