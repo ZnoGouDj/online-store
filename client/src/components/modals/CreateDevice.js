@@ -2,7 +2,7 @@ import { observer } from 'mobx-react-lite';
 import React, { useContext, useState, useEffect } from 'react';
 import { Modal, Button, Form, Dropdown, Col, Row } from 'react-bootstrap';
 import { Context } from '../..';
-import { fetchBrands, fetchTypes } from '../../http/deviceAPI';
+import { createDevice, fetchBrands, fetchTypes } from '../../http/deviceAPI';
 
 const CreateDevice = observer(({ show, onHide }) => {
   const { device } = useContext(Context);
@@ -19,11 +19,9 @@ const CreateDevice = observer(({ show, onHide }) => {
   const addInfo = () => {
     setInfo([...info, { title: '', description: '', number: Date.now() }]);
   };
-
   const removeInfo = number => {
     setInfo(info.filter(i => i.number !== number));
   };
-
   const changeInfo = (key, value, number) => {
     setInfo(info.map(i => (i.number === number ? { ...i, [key]: value } : i)));
   };
@@ -33,7 +31,14 @@ const CreateDevice = observer(({ show, onHide }) => {
   };
 
   const addDevice = () => {
-    console.log(info);
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('price', `${price}`);
+    formData.append('img', file);
+    formData.append('brandId', device.selectedBrand.id);
+    formData.append('typeId', device.selectedType.id);
+    formData.append('info', JSON.stringify(info));
+    createDevice(formData).then(data => onHide());
   };
 
   return (
