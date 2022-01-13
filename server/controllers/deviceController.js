@@ -10,19 +10,18 @@ class DeviceController {
       const { img } = req.files;
       let fileName = uuid.v4() + '.jpg';
       img.mv(path.resolve(__dirname, '..', 'static', fileName));
+      const device = await Device.create({ name, price, brandId, typeId, img: fileName });
 
       if (info) {
         info = JSON.parse(info);
         info.forEach(i =>
           DeviceInfo.create({
             title: i.title,
-            desctiption: i.desctiption,
+            description: i.description,
             deviceId: device.id,
           })
         );
       }
-
-      const device = await Device.create({ name, price, brandId, typeId, img: fileName });
 
       return res.json(device);
     } catch (e) {
@@ -37,16 +36,16 @@ class DeviceController {
     let offset = page * limit - limit;
     let devices;
     if (!brandId && !typeId) {
-      devices = await Device.findAll({ limit, offset });
+      devices = await Device.findAndCountAll({ limit, offset });
     }
     if (brandId && !typeId) {
-      devices = await Device.findAll({ where: { brandId }, limit, offset });
+      devices = await Device.findAndCountAll({ where: { brandId }, limit, offset });
     }
     if (!brandId && typeId) {
-      devices = await Device.findAll({ where: { typeId }, limit, offset });
+      devices = await Device.findAndCountAll({ where: { typeId }, limit, offset });
     }
     if (brandId && typeId) {
-      devices = await Device.findAll({ where: { typeId, brandId }, limit, offset });
+      devices = await Device.findAndCountAll({ where: { typeId, brandId }, limit, offset });
     }
     return res.json(devices);
   }
